@@ -3,8 +3,8 @@
 <?php
 function get_all_data(){
     global $conn;
-
-    $result = mysqli_query($conn, "SELECT * FROM movies WHERE movieId < 50");
+    #$result = mysqli_query($conn, "SELECT * FROM movies WHERE movieId < 50");
+    $result = mysqli_query($conn, "SELECT * FROM movies LIMIT 50");
     while ($row = mysqli_fetch_assoc($result)) {
         ?>
           <div class="col-4">

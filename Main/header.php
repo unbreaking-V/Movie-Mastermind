@@ -62,7 +62,7 @@
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
       <div class="container">
-        <a href="#" class="navbar-brand d-flex align-items-center">
+        <a href="/Main/main.php" class="navbar-brand d-flex align-items-center">
         <strong>Movie-Mastermind</strong>
 
       <style>
