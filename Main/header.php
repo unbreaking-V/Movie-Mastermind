@@ -46,23 +46,24 @@
     <div class="collapse bg-dark" id="navbarHeader">
       <div class="container">
         <div class="row">
-          <div class="col-sm-1 col-md-1 py-4">
+          <div class="col-sm-1 col-md-2 py-4">
           <nav class="nav flex-column">
-              <a class="nav-link active" aria-current="page" href="insert_page.php">Active</a>
+              <a class="nav-link active" aria-current="page" href="insert_page.php">Add movie</a>
+              <a class="nav-link active" aria-current="page" href="insert_user_page.php">Add user</a>
           </nav>
           </div>
           <div class="col-sm-8 offset-md-2 py-4">
           <h4 class="text-white">About</h4>
-            <p class="text-muted">Add some information about the album below, the author, or any other background
-              context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off
-              to some social networking sites or contact information.</p>
+            <p class="text-muted">This is a basic internet application for managing the Movie-Lens dataset, 
+                                  which provides functionalities to insert, delete, modify movies, add or remove tags from movies, 
+                                  add new users and ratings, and view movies, ratings, and tags.</p>
           </div>
         </div>
       </div>
     </div>
     <div class="navbar navbar-dark bg-dark shadow-sm">
       <div class="container">
-        <a href="/Main/main.php" class="navbar-brand d-flex align-items-center">
+        <a href="/main.php" class="navbar-brand d-flex align-items-center">
         <strong>Movie-Mastermind</strong>
 
       <style>
