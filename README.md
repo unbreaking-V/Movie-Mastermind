@@ -15,14 +15,14 @@ git clone https://github.com/unbreaking-V/Movie-Mastermind.git
 ## Features
 This application provides the following functionalities:
 
-1. Insert a new movie
-2. Delete a movie
-3. Modify an existing movie
+1. ~~Insert a new movie~~
+2. ~~Delete a movie~~
+3. ~~Modify an existing movie~~
 4. Add a new tag to a movie
 5. Remove a tag from a movie
 6. Add a new user
 7. Add a new rating
-8. View the movies
+8. ~~View the movies~~
 9. View the ratings
 10. View the tags
 
