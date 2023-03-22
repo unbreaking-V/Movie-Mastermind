@@ -54,18 +54,13 @@ function get_all_data(){
     }
 }
 
-function insert_data($title, $genres, $insert_tags){
+function insert_data($title, $genres){
     global $conn;
 
     $sql = "INSERT INTO movies (title, genres) VALUES ('$title', '$genres')";
     $insert_m_result = mysqli_query($conn, $sql);
 
-    $test1 = "SELECT movieId FROM movies WHERE title=$title";
-
-    $insert__t_query = "INSERT INTO tags (movieId, tag) VALUES ('$test1','$insert_tags')";
-    $insert_t_result = mysqli_query($conn, $insert__t_query);
-
-    if ($insert_m_result && $insert_t_result) {
+    if ($insert_m_result) {
         return true;
     }
     else{

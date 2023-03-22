@@ -17,12 +17,6 @@
         <label for="genres">Genres</label>   
     </div>
 
-    <div class="form-floating mb-3 mt-3">
-        <input type="text" class="form-control" name="tags" id="tags" aria-describedby="helpId" placeholder="Enter tags">
-        <small id="helpId" class="form-text text-muted">Please enter the tags of your movie.</small>      
-        <label for="tags">Tags</label>   
-    </div>
-
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
