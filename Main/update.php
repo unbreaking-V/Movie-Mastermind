@@ -21,9 +21,20 @@
         value='<?php $url_components = parse_url($_SERVER['REQUEST_URI']); 
         parse_str($url_components['query'], $params);
         echo $params['genres']; ?>'>
-        <small id="helpId" class="form-text text-muted">Please enter the genres of your movie. <br>If there is more than one genre, enter the following words using: "|"</small>      
+        <small id="helpId" class="form-text text-muted">Please enter the genres of your movie. <br>If there is more than one genre, enter the following words using: "|" </small>      
         <label for="genres">Genres</label>   
     </div>
+
+    <div class="form-floating mb-3 mt-3">
+        <input type="text" class="form-control" name="tags" id="tags" aria-describedby="helpId" placeholder="Enter tags"
+        value='<?php $url_components = parse_url($_SERVER['REQUEST_URI']); 
+        parse_str($url_components['query'], $params);
+        echo $params['tags'];
+        ?>'>
+        <small id="helpId" class="form-text text-muted">Please enter the tags of your movie. <br>If there is more than one tag, enter the following words using: ","</small>      
+        <label for="tags">Tags</label>   
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
  
 

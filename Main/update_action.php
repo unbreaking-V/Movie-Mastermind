@@ -4,13 +4,15 @@
     function error_redirect() {
         header("Location: main.php?error=1");
     }
-    if (isset($_POST["title"],$_POST["genres"]) && 
-    !empty($_POST["title"]) && !empty($_POST["genres"]))
+    if (isset($_POST["title"],$_POST["genres"], $_POST["tags"]) && 
+    !empty($_POST["title"]) && !empty($_POST["genres"]) && !empty($_POST["tags"]))
     {
+        
         $result = update_movie($_GET["movieId"],$_POST["title"], $_POST["genres"]);
-        if ($result)
+        $result_tags = update_tags($_GET["movieId"], $_POST["tags"]);
+        if ($result && $result_tags)
         {
-            header("Location: main.php"); 
+            header("Location: main.php");
         }
         else {
             error_redirect();
