@@ -48,6 +48,19 @@ function insert_data($title, $genres){
     }
 }
 
+function insert_user($Username){
+    global $conn;
+
+    $sql = "INSERT INTO user(Username) VALUES ('$Username')";
+    $result = mysqli_query($conn, $sql);
+    if ($result) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 function delete_movie($movieId)
 {
     global $conn;
