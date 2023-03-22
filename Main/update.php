@@ -1,5 +1,4 @@
 <?php include 'header.php'; ?>
-<?php require_once 'update.php';?>
 <?php require_once 'functions.php';?>
 
 

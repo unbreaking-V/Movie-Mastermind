@@ -10,7 +10,7 @@
   <meta name="generator" content="Hugo 0.72.0">
 
   <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/album/">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
   <!-- Bootstrap core CSS -->

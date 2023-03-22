@@ -4,7 +4,13 @@
 function get_all_data(){
     global $conn;
     $result = mysqli_query($conn, "SELECT * FROM movies LIMIT 50");
+    
     while ($row = mysqli_fetch_assoc($result)) {
+        $rating_sql = "SELECT AVG(rating) AS rating FROM ratings WHERE movieId = " . $row["movieId"];
+        $rating_result = mysqli_query($conn, $rating_sql);
+        $rating_row = mysqli_fetch_assoc($rating_result);
+        $rating = round($rating_row["rating"], 0);
+
         $sql = "SELECT DISTINCT * FROM tags WHERE movieId = " . $row["movieId"];
         $full_line = mysqli_query($conn, $sql);
         $tags = "";
@@ -15,22 +21,31 @@ function get_all_data(){
             }
         }
         ?>
-          <div class="col-4">
-            <div class="card shadow-sm">
-              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" role="img" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                  dy=".3em"> <?php echo ($row["title"]) ?></text>
-              </svg>
+        <div class="col-md-6">
+      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-2 d-flex flex-column align-self-end position-static">
+        <div class="d-grid gap-2 d-md-flex justify-content-center">
+            </div>
+        <center>
 
-              <div class="card border-primary">
-                  <div class="card-body">
-            
-            <center>
+        <p class="card-text">
+                        <?php for ($i = 0; $i < $rating; $i++) {
+                            ?>
+                            <span class="fa fa-star" style="color: orange"></span>
+                            <?php
+                        }
+                        for ($i = $rating; $i < 5.0; $i++) {
+                            ?>
+                            <span class="fa fa-star"></span>
+                            <?php
+                        }
+                        ?>
+                    </p>
+        
+           
+
                 <?php get_genres($row["genres"]) ?>
-            </center>
-            <center>
+                <br>
                 <?php
                 if ($tags != "") {
                     view_tags($tags);
@@ -41,15 +56,23 @@ function get_all_data(){
                 }
                 ?>
             </center>
-
-                    <div class="d-flex justify-content-between align-items-center">
+            <br>
+                    <div class="d-flex justify-content-between align-items-end">
                         <a name="" id="" class="btn btn-sm btn-outline-secondary" href="update.php?movieId=<?php echo($row["movieId"]) ?>&title=<?php echo ($row["title"]) ?>&genres=<?php echo ($row["genres"])?>&tags=<?php echo $tags?>" role="button">Update</a>
+                        <a name="" id="" class="btn btn-sm btn-outline-secondary" href="add_rating.php?movieId=<?php echo($row["movieId"]) ?>&title=<?php echo ($row["title"]) ?>&tags=<?php echo $tags?>" role="button">Add Rating</a>
+                        <a name="" id="" class="btn btn-sm btn-outline-secondary" href="ratings.php?movieId=<?php echo($row["movieId"]) ?>" role="button">View Rating</a>
                         <a name="" id="" class="btn btn-sm btn-outline-secondary" href="delete.php?movieId=<?php echo($row["movieId"]) ?>" role="button">Delete</a>
+
                     </div>
-                    </div>
-                </div>
-              </div>
-            </div>
+          
+        </div>
+        <div class="col-auto d-none d-lg-block">
+          <svg class="bd-placeholder-img" width="350" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em"><?php echo ($row["title"]) ?></text></text></svg>
+          
+        </div>
+      </div>
+    </div>
+          
         <?php
     }
 }
@@ -167,5 +190,91 @@ function view_tags($tags)
     }
 }
 
+
+function display_ratings($movieId)
+{
+    global $conn;
+    $sql = "SELECT userId,rating FROM ratings WHERE movieId=$movieId";
+ 
+    
+
+    $result = mysqli_query($conn, $sql);
+    if (!mysqli_num_rows($result) > 0) {
+        ?>
+        <!-- Centered out by y and x text 'No ratings yer' -->
+        <div class="d-flex justify-content-center align-items-center h-100">
+            <h3 class="text-muted">No available ratings yet</h3>
+        </div>
+        <?php
+        return;
+    }
+    while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+    
+        <div class="card">
+            <h5 class="card-header"><p class="card-text">User id: <?php echo($row["userId"]) ?></p></h5>
+            <div class="card-body">
+            
+                <div class="height-50 d-flex justify-content-center align-items-center">
+                    <?php
+                            $rating = round($row["rating"]);
+                            for ($i = 0; $i < $rating; $i++) {
+                                ?>
+                                <span class="fa fa-star" style="color: orange"></span>
+                                <?php
+                            }
+                            for ($i = $rating; $i < 5.0; $i++) {
+                                ?>
+                                <span class="fa fa-star"></span>
+                                <?php
+                            }
+
+                            ?>
+            
+                </div>
+             <h4 class="card-title">Rating: <?php echo ($row["rating"]) ?></h4>
+        </div>
+    </div>
+        
+        <?php
+    }
+}
+
+function add_rating($movieId, $userId, $rating)
+{
+    global $conn;
+    $sql = "SELECT * FROM ratings WHERE movieId=$movieId AND userId=$userId";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        return false;
+    }
+
+    // Verify if the rating is valid
+    if ($rating < 0 || $rating > 5) {
+        return false;
+    }
+    $rating = round($rating, 1);
+
+    $sql = "INSERT INTO ratings (movieId, userId, rating) VALUES ($movieId, $userId, $rating)";
+    $result = mysqli_query($conn, $sql);
+    if (!$result) {
+        return false;
+    }
+
+    // If tags are empty, we don't need to insert them
+    if (empty($tags)) {
+        return true;
+    } 
+
+}
+
+function get_users()
+{
+    global $conn;
+
+    $sql = "SELECT * FROM user WHERE userId > 610;";
+    $result = mysqli_query($conn, $sql);
+    return $result;
+}
 
 ?>
