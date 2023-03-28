@@ -3,7 +3,7 @@
 <?php
 function get_all_data(){
     global $conn;
-    $result = mysqli_query($conn, "SELECT * FROM movies LIMIT 50");
+    $result = mysqli_query($conn, "SELECT * FROM movies ORDER BY movieId ASC LIMIT 100");
     
     while ($row = mysqli_fetch_assoc($result)) {
         $rating_sql = "SELECT AVG(rating) AS rating FROM ratings WHERE movieId = " . $row["movieId"];
@@ -194,7 +194,7 @@ function view_tags($tags)
 function display_ratings($movieId)
 {
     global $conn;
-    $sql = "SELECT userId,rating FROM ratings WHERE movieId=$movieId";
+    $sql = "SELECT userId,Username,rating FROM ratings JOIN user USING(userId) WHERE movieId=$movieId";
  
     
 
@@ -209,6 +209,7 @@ function display_ratings($movieId)
         return;
     }
     while ($row = mysqli_fetch_assoc($result)) {
+        if ($row["Username"] == Null){
         ?>
     
         <div class="card">
@@ -237,6 +238,37 @@ function display_ratings($movieId)
     </div>
         
         <?php
+    }
+    else{
+        ?>
+    
+        <div class="card">
+            <h5 class="card-header"><p class="card-text">Nickname: <?php echo($row["Username"]) ?></p></h5>
+            <div class="card-body">
+            
+                <div class="height-50 d-flex justify-content-center align-items-center">
+                    <?php
+                            $rating = round($row["rating"]);
+                            for ($i = 0; $i < $rating; $i++) {
+                                ?>
+                                <span class="fa fa-star" style="color: orange"></span>
+                                <?php
+                            }
+                            for ($i = $rating; $i < 5.0; $i++) {
+                                ?>
+                                <span class="fa fa-star"></span>
+                                <?php
+                            }
+
+                            ?>
+            
+                </div>
+             <h4 class="card-title">Rating: <?php echo ($row["rating"]) ?></h4>
+        </div>
+    </div>
+        
+        <?php
+        }
     }
 }
 

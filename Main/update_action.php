@@ -5,7 +5,7 @@
         header("Location: main.php?error=1");
     }
     if (isset($_POST["title"],$_POST["genres"], $_POST["tags"]) && 
-    !empty($_POST["title"]) && !empty($_POST["genres"]) && !empty($_POST["tags"]))
+    !empty($_POST["title"]) && !empty($_POST["genres"]) )
     {
         
         $result = update_movie($_GET["movieId"],$_POST["title"], $_POST["genres"]);
